@@ -25,6 +25,9 @@ jobs:
       id: Cubrimiento
       run:
         coverage run -m unittest tests/*.py
+    - name: Reporte de cubrimiento
+      id: Reporte
+      run:
         coverage report -m
     - name: Merge rama release con main
       if: ${{ contains(github.event.head_commit.message, 'MERGE-MASTER') }}
