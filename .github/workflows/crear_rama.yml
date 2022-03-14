@@ -15,3 +15,9 @@ jobs:
       run:
         git checkout -b release
         git push -f -u origin release
+    - name: MErge main --> release
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${( secrets_GITHUB_TOKEN )}
+        source-branch: main
+        target-branch: release    
