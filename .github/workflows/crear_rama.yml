@@ -13,3 +13,4 @@ jobs:
       run:
         git checkout -b release
         git push -f -u origin release
+
