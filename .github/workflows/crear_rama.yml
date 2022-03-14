@@ -12,13 +12,8 @@ jobs:
     - name: Checkout de repositorio
       uses: actions/checkout@v2
     - name: Crear rama release
-      run:
-        git branch release
-        git checkout release
-        git push -f -u origin release
-    - name: Merge master --> release
-      uses: tukasz/direct-merge-action@master
+      uses: peterjgrainger/action-create-branch@v2.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        GITHUB_TOKEN: ${( secrets_GITHUB_TOKEN )}
-        source-branch: master
-        target-branch: release    
+        branch: 'release'  
