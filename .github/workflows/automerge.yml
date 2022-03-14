@@ -29,8 +29,11 @@ jobs:
       id: Reporte
       run:
         coverage report -m
-      
+  job2:
     name: Merge con main
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
     - name: Merge rama release con main
       if: ${{ contains(github.event.head_commit.message, 'MERGE-MASTER') }}
       uses: tukasz/direct-merge-action@master
