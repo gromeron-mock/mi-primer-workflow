@@ -14,5 +14,4 @@ jobs:
     - name: Crear rama release
       run:
         git branch release
-        git push -f -u origin release
 
