@@ -1,7 +1,9 @@
 name: Crear rama
 on:
   push:
-    branches: [ master ]
+    branches:
+      - 'master'
+      - 'releases/**'
 jobs:
   job1:
     name: Crear rama release
