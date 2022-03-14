@@ -1,4 +1,4 @@
-name: Pruebas unitarias
+name: Crear rama
 on:
   push:
     branches: [ master ]
@@ -13,9 +13,3 @@ jobs:
       run:
         git checkout -b release
         git push -f -u origin release
-    - name: Merge desarrollo --> release
-      uses: tukasz/direct-merge-action@master
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        source-branch: release
-        targer-branch: main
