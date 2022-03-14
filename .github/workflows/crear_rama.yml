@@ -1,0 +1,21 @@
+name: Pruebas unitarias
+on:
+  push:
+    branches: [ master ]
+jobs:
+  job1:
+    name: Crear rama release
+    runs-on: ubuntu-latestest
+    steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v2
+    - name: Crear rama release
+      run:
+        git checkout -b release
+        git push -f -u origin release
+    - name: Merge desarrollo --> release
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: release
+        targer-branch: main
