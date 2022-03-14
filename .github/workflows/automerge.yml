@@ -1,7 +1,7 @@
 name: automerge
 on:
   push:
-    branches: [ ${{ github.ref }} ]
+    branches: ${{ github.ref }}
 
 jobs:
   job1:
