@@ -39,5 +39,5 @@ jobs:
       uses: tukasz/direct-merge-action@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        source-branch: ${( github.ref )}
-        target-branch: 'master'
+        source-branch: release
+        target-branch: master
