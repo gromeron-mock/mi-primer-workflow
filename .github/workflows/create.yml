@@ -2,7 +2,7 @@ name: Team branches creation
 on:
   push:
     branches:
-      - 'master'
+      - 'release'
 jobs:
   job1:
     name: Create team braches
