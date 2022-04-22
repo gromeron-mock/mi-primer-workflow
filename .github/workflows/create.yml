@@ -16,19 +16,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        branch: 'dev1'
-      uses: peterjgrainger/action-create-branch@v2.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        branch: 'dev2'
-      uses: peterjgrainger/action-create-branch@v2.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        branch: 'dev3'
-      uses: peterjgrainger/action-create-branch@v2.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        branch: 'dev4'
+        branch: 'dev1',
+        branch: 'dev2',
+        branch: 'dev3',
+        branch: 'dev4',
+        branch: 'dev5',
+        branch: 'dev6',
