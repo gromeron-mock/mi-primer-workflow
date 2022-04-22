@@ -5,20 +5,29 @@ on:
       - 'release'
 jobs:
   job1:
-    name: Create team braches
+    name: Create team branches
     runs-on: ubuntu-latest
     steps:
     - name: Repository checkout
       uses: actions/checkout@v3
-    - name: Create team braches
+    - name: Create dev1 branch
       if: ${{ contains(github.event.head_commit.message, 'CREATE_TEAM_BRANCHES') }}
       uses: peterjgrainger/action-create-branch@v2.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        branch: 'dev1',
-        branch: 'dev2',
-        branch: 'dev3',
-        branch: 'dev4',
-        branch: 'dev5',
-        branch: 'dev6',
+        branch: 'dev1'
+    - name: Create dev2 branch
+      if: ${{ contains(github.event.head_commit.message, 'CREATE_TEAM_BRANCHES') }}
+      uses: peterjgrainger/action-create-branch@v2.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        branch: 'dev2'
+    - name: Create dev3 branch
+      if: ${{ contains(github.event.head_commit.message, 'CREATE_TEAM_BRANCHES') }}
+      uses: peterjgrainger/action-create-branch@v2.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        branch: 'dev3'
