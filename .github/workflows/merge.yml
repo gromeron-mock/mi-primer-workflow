@@ -1,0 +1,138 @@
+name: Automerge
+on:
+  push:
+    branches:
+      - 'dev**'
+      - 'hotfix**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    name: Build and test
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ng-easy/npm-install@v1
+      - run: npm run build
+
+jobs:
+  job1:
+    name: Pruebas unitarias en rama local
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v3
+    - name: Configuaracion del entorno de python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.7'
+    - name: Instalacion de librerias y despendencias
+      run:
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Correr pruebas
+      id: correr-pruebas
+      run:
+        python -m unittest -v tests/*.py
+    - name: Calculo de cubrimiento
+      id: cubrimiento
+      run:
+        coverage run -m unittest tests/*.py
+    - name: Reporte de cubrimiento
+      id: reporte
+      run:
+        coverage report -m
+  job2:
+    name: Merge rama local con desarrollo
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+    - name: Merge rama local con desarrollo
+      if:
+        contains(github.event.head_commit.message, '[MERGE2DEVELOP]') ||
+        contains(github.event.head_commit.message, '[MERGE2DEV]')
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ github.ref }}
+        target-branch: desarrollo
+  job3:
+    name: Pruebas unitarias en desarrollo
+    needs: job2
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout de repositorio release
+      uses: actions/checkout@v3
+      with:
+        ref: desarrollo
+    - name: Configuaracion del entorno de python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.7'
+    - name: Instalacion de librerias y despendencias
+      run:
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Correr pruebas
+      id: correr-pruebas
+      run:
+        python -m unittest -v tests/*.py
+    - name: Calculo de cubrimiento
+      id: Cubrimiento
+      run:
+        coverage run -m unittest tests/*.py
+    - name: Reporte de cubrimiento
+      id: Reporte
+      run:
+        coverage report -m
+  job4:
+    name: Merge con release
+    needs: job3
+    runs-on: ubuntu-latest
+    steps:
+    - name: Merge rama desarrollo con release
+      if: ${{ contains(github.event.head_commit.message, '[MERGE2RELEASE') }}
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: desarrollo
+        target-branch: release
+  job5:
+    name: Pruebas unitarias en release
+    needs: job4
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v3
+      with:
+        ref: release
+    - name: Configuaracion del entorno de python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.7'
+    - name: Instalacion de librerias y despendencias
+      run:
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Correr pruebas
+      id: correr-pruebas
+      run: python -m unittest -v tests/*.py
+    - name: Calculo de cubrimiento
+      id: Cubrimiento
+      run:
+        coverage run -m unittest tests/*.py
+    - name: Reporte de cubrimiento
+      id: Reporte
+      run:
+        coverage report -m
+  job6:
+    name: Merge con main
+    needs: job5
+    runs-on: ubuntu-latest
+    steps:
+    - name: Merge rama release con main
+      if: ${{ contains(github.event.head_commit.message, '[MERGE2MAIN') }}
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: release
+        target-branch: main
