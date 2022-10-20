@@ -25,9 +25,14 @@ jobs:
           pr_body: "Automated Pull Request"
           #pr_reviewer: "gromeron-mock"
           if: ${{ env.GITHUB_ACTOR == 'gromeron-mock' }}
-#          pr_reviewer: ${{ env.GITHUB_ACTOR }}
           pr_reviewer: "gromeron"
-          pr_assignee: "gromeron"
+          pr_assignee: "gasiferox"
+#          if: ${{ env.GITHUB_ACTOR == 'gromeron' }}
+#          pr_reviewer: "gasiferox"
+#          pr_assignee: "gromeron-mock"
+#          if: ${{ env.GITHUB_ACTOR == 'gasiferox' }}
+#          pr_reviewer: "gromeron-mock"
+#          pr_assignee: "gromeron"
 #          if: ${{ env.GITHUB_ACTOR == 'gromeron' }}
 #            pr_reviewer: "gromeron-mock"
 #            pr_assignee: ${{ env.GITHUB_ACTOR }}
