@@ -2,8 +2,7 @@ name: Merge Release Into Master
 
 on:
   push:
-    branches:
-      - 'release/*'
+    branches: [release]
 
 jobs:
   master:
