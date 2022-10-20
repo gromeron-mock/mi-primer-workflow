@@ -18,7 +18,7 @@ jobs:
 
       # https://github.com/marketplace/actions/github-pull-request-action
       - name: create pull request dev1
-        if: ${{ env.GITHUB_ACTOR == 'gromeron-mock' }}
+        if: ${{ github.actor == 'gromeron-mock' }}
         id: open-pr-1
         uses: repo-sync/pull-request@v2
         with:
@@ -30,7 +30,7 @@ jobs:
           pr_assignee: "gasiferox"
 
       - name: create pull request dev2
-        if: ${{ env.GITHUB_ACTOR == 'gromeron' }}
+        if: ${{ github.actor == 'gromeron' }}
         id: open-pr-2
         uses: repo-sync/pull-request@v2
         with:
@@ -42,7 +42,7 @@ jobs:
           pr_assignee: "gasiferox"
 
       - name: create pull request dev3
-        if: ${{ env.GITHUB_ACTOR == 'gasiferox' }}
+        if: ${{ github.actor == 'gasiferox' }}
         id: open-pr-3
         uses: repo-sync/pull-request@v2
         with:
