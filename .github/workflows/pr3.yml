@@ -20,7 +20,7 @@ jobs:
 
       - name: create pull request dev1
         if: ${{ env.GITHUB_ACTOR }} == "gromeron-mock"
-        id: open-pr
+        id: open-pr-dev1
         uses: repo-sync/pull-request@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -33,7 +33,7 @@ jobs:
 
       - name: create pull request dev2
         if: ${{ env.GITHUB_ACTOR }} == "gromeron"
-        id: open-pr
+        id: open-pr-dev2
         uses: repo-sync/pull-request@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
 
       - name: create pull request dev3
         if: ${{ env.GITHUB_ACTOR }} == "gasiferox"
-        id: open-pr
+        id: open-pr-dev3
         uses: repo-sync/pull-request@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
