@@ -19,7 +19,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: create pull request dev1
-        if: ${{ env.GITHUB_ACTOR == 'gromeron-mock' }}
+        #if: ${{ env.GITHUB_ACTOR == 'gromeron-mock' }}
+        if: ${{ github.actor == 'gromeron-mock' }}
         id: open-pr
         uses: repo-sync/pull-request@v2
         with:
