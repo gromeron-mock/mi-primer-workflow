@@ -24,7 +24,7 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          destination_branch: [develop]
+          destination_branch: 'develop'
           pr_title: "[Automated] Merge ${{ github.ref_name }} into develop"
           pr_body: "Automated Pull Request"
           pr_reviewer: "gromeron"
