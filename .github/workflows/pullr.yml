@@ -7,6 +7,8 @@ on:
 jobs:
   master:
     name: Create PR Release to Master
+    if: contains(github.event.head_commit.message, '[MERGE2DEVELOP]') ||
+        contains(github.event.head_commit.message, '[MERGE2DEV]')
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
@@ -15,27 +17,43 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # https://github.com/marketplace/actions/github-pull-request-action
-      - name: create pull request
-        id: open-pr
+      - name: create pull request dev1
+        if: ${{ github.actor == 'gromeron-mock' }}
+        id: open-pr-1
         uses: repo-sync/pull-request@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           destination_branch: ${{ github.event.repository.default_branch }}
           pr_title: "[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}"
           pr_body: "Automated Pull Request"
-          #pr_reviewer: "gromeron-mock"
-          if: ${{ env.GITHUB_ACTOR == 'gromeron-mock' }}
           pr_reviewer: "gromeron"
           pr_assignee: "gasiferox"
-#          if: ${{ env.GITHUB_ACTOR == 'gromeron' }}
-#          pr_reviewer: "gasiferox"
-#          pr_assignee: "gromeron-mock"
-#          if: ${{ env.GITHUB_ACTOR == 'gasiferox' }}
-#          pr_reviewer: "gromeron-mock"
-#          pr_assignee: "gromeron"
-#          if: ${{ env.GITHUB_ACTOR == 'gromeron' }}
-#            pr_reviewer: "gromeron-mock"
-#            pr_assignee: ${{ env.GITHUB_ACTOR }}
+
+      - name: create pull request dev2
+        if: ${{ github.actor == 'gromeron' }}
+        id: open-pr-2
+        uses: repo-sync/pull-request@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: ${{ github.event.repository.default_branch }}
+          pr_title: "[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}"
+          pr_body: "Automated Pull Request"
+          pr_reviewer: "gromeron-mock"
+          pr_assignee: "gasiferox"
+
+      - name: create pull request dev3
+        if: ${{ github.actor == 'gasiferox' }}
+        id: open-pr-3
+        uses: repo-sync/pull-request@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: ${{ github.event.repository.default_branch }}
+          pr_title: "[Automated] Merge ${{ github.ref_name }} into ${{ github.event.repository.default_branch }}"
+          pr_body: "Automated Pull Request"
+          pr_reviewer: "gromeron-mock"
+          pr_assignee: "gromeron"
+
+
 
       # https://github.com/marketplace/actions/enable-pull-request-automerge
       - name: enable automerge
