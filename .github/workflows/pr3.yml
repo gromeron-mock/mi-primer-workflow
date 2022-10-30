@@ -19,7 +19,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: create pull request dev1
-        #if: ${{ env.GITHUB_ACTOR == 'gromeron-mock' }}
         if: ${{ env.GITHUB_ACTOR }} == "gromeron-mock"
         id: open-pr
         uses: repo-sync/pull-request@v2
@@ -29,7 +28,34 @@ jobs:
           pr_title: "[Automated] Merge ${{ github.ref_name }} into develop"
           pr_body: "Automated Pull Request"
           pr_reviewer: "gromeron"
+          # Aprover
           pr_assignee: "gasiferox"
+
+      - name: create pull request dev2
+        if: ${{ env.GITHUB_ACTOR }} == "gromeron"
+        id: open-pr
+        uses: repo-sync/pull-request@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: 'develop'
+          pr_title: "[Automated] Merge ${{ github.ref_name }} into develop"
+          pr_body: "Automated Pull Request"
+          pr_reviewer: "gasiferox"
+          # Aprover
+          pr_assignee: "gromeron-mock"
+
+      - name: create pull request dev3
+        if: ${{ env.GITHUB_ACTOR }} == "gasiferox"
+        id: open-pr
+        uses: repo-sync/pull-request@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: 'develop'
+          pr_title: "[Automated] Merge ${{ github.ref_name }} into develop"
+          pr_body: "Automated Pull Request"
+          pr_reviewer: "gromeron-mock"
+          # Aprover
+          pr_assignee: "gromeron"
 
       - name: enable automerge
         if: steps.open-pr.outputs.pr_number != ''
