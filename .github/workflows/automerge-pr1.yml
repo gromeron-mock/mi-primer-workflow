@@ -19,16 +19,15 @@ on:
       - completed
   status: {}
 jobs:
-  automerge:
+  merge-to-develop:
+    name: Merge local branch to develop
     runs-on: ubuntu-latest
     steps:
-      - id: automerge
-        name: automerge
-        uses: "pascalgn/automerge-action@v0.15.5"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          
-      - name: feedback
-        if: steps.automerge.outputs.mergeResult == "merged"
-        run: |
-          echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
+      - name: Merge local branch to develop
+        if: contains(github.event.head_commit.message, '[MERGE2DEVELOP]') ||
+          contains(github.event.head_commit.message, '[MERGE2DEV]')
+        uses: tukasz/direct-merge-action@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          source-branch: ${{ github.ref }}
+          target-branch: develop
